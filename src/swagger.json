@@ -1,0 +1,188 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Projeto Integrado -  Backend",
+    "description": "Projeto Integrado da Disciplina Projeto Integrado - Backend",
+    "contact": { "email": "gustavorodrigues.grm@gmail.com" },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/",
+      "description": "API"
+    }
+  ],
+  "paths": {
+    "/clients": {
+      "post": {
+        "summary": "Cadastro de Client",
+        "description": "Essa rota será responsável por cadastrar um novo Client",
+        "tags": ["Clients"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Client"
+              },
+              "examples": {
+                "clients": {
+                  "value": {
+                    "name": "Client 1"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listagem de todos os Clients",
+        "description": "Essa rota será responsável por listar todos os Clients cadastrados",
+        "tags": ["Clients"]
+      },
+      "put": {
+        "summary": "Atualização de Client por id",
+        "description": "Essa rota será responsável por atualizar um Client cadastrado por id",
+        "tags": ["Clients"]
+      }
+    },
+    "/clients/id": {
+      "get": {
+        "summary": "Listagem de Client por id",
+        "description": "Essa rota será responsável por listar um Client cadastrado por id",
+        "tags": ["Clients"]
+      },
+      "delete": {
+        "summary": "Remove Client por id",
+        "description": "Essa rota será responsável por remover um Client cadastrado por id",
+        "tags": ["Clients"]
+      }
+    },
+    "/companies": {
+      "post": {
+        "summary": "Cadastro de Company",
+        "description": "Essa rota será responsável por cadastrar uma nova Company",
+        "tags": ["Companies"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Company"
+              },
+              "examples": {
+                "companies": {
+                  "value": {
+                    "name": "Company 1",
+                    "clientId": "example clientId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listagem de todos as Companies",
+        "description": "Essa rota será responsável por listar todos Companies cadastradas",
+        "tags": ["Companies"]
+      },
+      "put": {
+        "summary": "Atualização de Company por id",
+        "description": "Essa rota será responsável por atualizar uma company cadastrada por id",
+        "tags": ["Companies"]
+      }
+    },
+    "/companies/id": {
+      "get": {
+        "summary": "Listagem de Company por id",
+        "description": "Essa rota será responsável por listar uma company cadastrada por id",
+        "tags": ["Companies"]
+      },
+      "delete": {
+        "summary": "Remove Company por id",
+        "description": "Essa rota será responsável por remover uma company cadastrada por id",
+        "tags": ["Companies"]
+      }
+    },
+    "/professionals": {
+      "post": {
+        "summary": "Cadastro de Professional",
+        "description": "Essa rota será responsável por cadastrar um novo Professional",
+        "tags": ["Professionals"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Professional"
+              },
+              "examples": {
+                "clients": {
+                  "value": {
+                    "name": "Professoinal 1",
+                    "skill": "Desenvolvimento"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listagem de todos os Professionals",
+        "description": "Essa rota será responsável por listar todos os Professionals cadastrados",
+        "tags": ["Professionals"]
+      },
+      "put": {
+        "summary": "Atualização de Professional por id",
+        "description": "Essa rota será responsável por atualizar um Professional cadastrado por id",
+        "tags": ["Professionals"]
+      }
+    },
+    "/professionals/id": {
+      "get": {
+        "summary": "Listagem de Professional por id",
+        "description": "Essa rota será responsável por listar um Professional cadastrado por id",
+        "tags": ["Professionals"]
+      },
+      "delete": {
+        "summary": "Remove Professional por id",
+        "description": "Essa rota será responsável por remover um Professional cadastrado por id",
+        "tags": ["Professionals"]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Client": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Company": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "clientId": {
+            "type": "string"
+          }
+        }
+      },
+      "Professional": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "skill": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

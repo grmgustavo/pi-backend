@@ -7,6 +7,6 @@ router
   .get("/clients", ClientController.getClients)
   .get("/clients/:id", ClientController.getClientById)
   .post("/clients", ClientController.createClient)
-  .put("/clients", ClientController.updateClient)
+  .put("/clients/id", ClientController.updateClient)
   .delete("/clients/:id", ClientController.deleteClient);
 export default router;
