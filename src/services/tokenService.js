@@ -1,4 +1,4 @@
-import env from '../config/.env.json' assert {type: json}
+import env from '../config/.env.json' assert {type: "json"}
 import jwt from 'jsonwebtoken'
 
 export default class TokenService {
@@ -6,6 +6,6 @@ export default class TokenService {
     return jwt.sign({payload}, env.segredo)
   }
   static validateToken =(token)=>{
-    return jwt.verify(token)
+    return jwt.verify(token, env.segredo)
   }
 }

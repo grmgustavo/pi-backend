@@ -1,16 +1,9 @@
 import express from "express";
-import ClientsService from "../services/clientsService";
-import TokenService from "../services/tokenService";
+import TokenController from "../controllers/tokenController.js";
 
-const token = express.Router();
+const router = express.Router();
 
-token.get("/token/:id", async (req, res) => {
-  const { id } = req.params;
-  const client = await ClientsService.findById(id);
+router.get("/token/:name", TokenController.createToken);
 
-  if (!client) {
-    res.status(404).json(`Client ${id} not found`);
-  }
-  const token = TokenService.createToken(client);
-  res.json({ token: token });
-});
+
+export default router

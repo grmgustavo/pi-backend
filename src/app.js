@@ -9,7 +9,6 @@ db.once("open", () => {
 });
 
 const app = express();
-app.use(authMiddleware);
 routes(app);
 
 export default app;
