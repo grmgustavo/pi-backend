@@ -1,63 +1,30 @@
-import companies from "../models/Company.js";
+import CompaniesService from "../services/companiesService.js";
 
-export default class CompanyController {
-  static getCompanies = (req, res, start) => {
-    companies
-      .find()
-      .populate("clientId", "name")
-      .exec((err, companies) => {
-        res.status(200).json(companies);
-      });
+export default class CompaniesController {
+  static findAll = async (req, res) => {
+    const companies = await CompaniesService.findAll();
+    if (!companies) {
+      res.status(400).json("No companies found");
+    }
+    res.status(200).json(companies);
   };
-  static getCompanyById = (req, res, start) => {
-    const id = req.params.id;
-
-    companies
-      .findById(id)
-      .populate("clientId", "name")
-      .exec((err, companies) => {
-        if (err) {
-          res.status(400).send({ message: `${err.message} - Id not found` });
-        } else {
-          res.status(200).send(companies);
-        }
-      });
+  static findById = async (req, res) => {
+    const { id } = req.params;
+    const company = await CompaniesService.findById(id);
+    res.status(200).json(company);
   };
-
-  static createCompany = (req, res, start) => {
-    let company = new companies(req.body);
-    company.save((err) => {
-      if (err) {
-        res.status(500).send({
-          message: `${err.message} - failed to create new company`,
-        });
-      } else {
-        res.status(201).send(company.toJSON());
-      }
-    });
+  static create = async (req, res) => {
+    const company = await CompaniesService.create(req.body);
+    res.status(201).json(company);
   };
-
-  static updateCompany = (req, res, start) => {
-    const id = req.params.id;
-
-    Companies.findByIdAndUpdate(id, { $set: req.body }, (err) => {
-      if (!err) {
-        res.status(200).send({ message: "Company updated" });
-      } else {
-        res.status(500).send({ message: err.message });
-      }
-    });
+  static update = async (req, res) => {
+    const { id } = req.params;
+    const company = req.body;
+    res.status(200).send(await CompaniesService.update(id, company));
   };
+  static remove = async (req, res) => {
+    const { id } = req.params;
 
-  static deleteCompany = (req, res, start) => {
-    const id = req.params.id;
-
-    companies.findByIdAndDelete(id, (err) => {
-      if (!err) {
-        res.status(200).send({ message: "Deleted" });
-      } else {
-        res.status(500).send({ message: err.message });
-      }
-    });
+    res.status(200).json(await CompaniesService.remove(id));
   };
 }

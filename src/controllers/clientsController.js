@@ -1,57 +1,32 @@
-import clients from "../models/Client.js";
+import ClientsService from "../services/clientsService.js";
 
-export default class ClientController {
-  static getClients = (req, res, start) => {
-    clients.find((err, clients) => {
-      res.status(200).send(clients);
-    });
-  };
-  static getClientById = (req, res, start) => {
-    const id = req.params.id;
-
-    clients.findById(id, (err, clients) => {
-      if (err) {
-        res.status(400).send({ message: `${err.message} - Id not found` });
-      } else {
-        res.status(200).send(clients);
-      }
-    });
+export default class ClientsController {
+  static findAll = async (req, res) => {
+    const clients = await ClientsService.findAll();
+    if (!clients) {
+      res.status(400).json("No clients found");
+    }
+    res.status(200).json(clients);
   };
 
-  static createClient = (req, res, start) => {
-    let client = new clients(req.body);
-    client.save((err) => {
-      if (err) {
-        res.status(500).send({
-          message: `${err.message} - failed to create new Client`,
-        });
-      } else {
-        res.status(201).send(client.toJSON());
-      }
-    });
+  static findById = async (req, res) => {
+    const { id } = req.params;
+    const client = await ClientsService.findById(id);
+    res.status(200).json(client);
   };
 
-  static updateClient = (req, res, start) => {
-    const id = req.params.id;
-
-    clients.findByIdAndUpdate(id, { $set: req.body }, (err) => {
-      if (!err) {
-        res.status(200).send({ message: "Client updated" });
-      } else {
-        res.status(500).send({ message: err.message });
-      }
-    });
+  static create = async (req, res) => {
+    const client = await ClientsService.create(req.body);
+    res.status(201).json(client);
   };
+  static update = async (req, res) => {
+    const { id } = req.params;
+    const client = req.body;
+    res.status(200).send(await ClientsService.update(id, client));
+  };
+  static remove = async (req, res) => {
+    const { id } = req.params;
 
-  static deleteClient = (req, res, start) => {
-    const id = req.params.id;
-
-    clients.findByIdAndDelete(id, (err) => {
-      if (!err) {
-        res.status(200).send({ message: "Deleted" });
-      } else {
-        res.status(500).send({ message: err.message });
-      }
-    });
+    res.status(200).json(await ClientsService.remove(id));
   };
 }

@@ -1,12 +1,11 @@
 import express from "express";
-import CompanyController from "../controllers/companiesController.js";
+
+import CompaniesController from "../controllers/companiesController.js";
 
 const router = express.Router();
 
 router
-  .get("/companies", CompanyController.getCompanies)
-  .get("/companies/:id", CompanyController.getCompanyById)
-  .post("/companies", CompanyController.createCompany)
-  .put("/companies", CompanyController.updateCompany)
-  .delete("/companies/:id", CompanyController.deleteCompany);
+  .get("/companies", CompaniesController.findAll)
+  .get("/companies/:id", CompaniesController.findById)
+  .post("/companies", CompaniesController.create);
 export default router;

@@ -1,57 +1,27 @@
-import professionals from "../models/Professional.js";
+import ProfessionalsService from "../services/professionalsService.js";
 
-export default class ProfessionalController {
-  static getProfessionals = (req, res, start) => {
-    professionals.find((err, professionals) => {
-      res.status(200).send(professionals);
-    });
+export default class ProfessionalsController {
+  static findAll = async (req, res) => {
+    const professionals = await ProfessionalsService.findAll();
+    res.status(200).json(professionals);
   };
-  static getProfessionalById = (req, res, start) => {
-    const id = req.params.id;
-
-    professionals.findById(id, (err, professionals) => {
-      if (err) {
-        res.status(400).send({ message: `${err.message} - Id not found` });
-      } else {
-        res.status(200).send(professionals);
-      }
-    });
+  static findById = async (req, res) => {
+    const { id } = req.params;
+    const professional = await ProfessionalsService.findById(id);
+    res.status(200).json(professional);
   };
-
-  static createProfessional = (req, res, start) => {
-    let professional = new professionals(req.body);
-    professional.save((err) => {
-      if (err) {
-        res.status(500).send({
-          message: `${err.message} - failed to create new professional`,
-        });
-      } else {
-        res.status(201).send(professional.toJSON());
-      }
-    });
+  static create = async (req, res) => {
+    const professional = await ProfessionalsService.create(req.body);
+    res.status(201).json(professional);
   };
-
-  static updateProfessional = (req, res, start) => {
-    const id = req.params.id;
-
-    professionals.findByIdAndUpdate(id, { $set: req.body }, (err) => {
-      if (!err) {
-        res.status(200).send({ message: "Professional updated" });
-      } else {
-        res.status(500).send({ message: err.message });
-      }
-    });
+  static update = async (req, res) => {
+    const { id } = req.params;
+    const professional = req.body;
+    res.status(200).send(await ProfessionalsService.update(id, professional));
   };
+  static remove = async (req, res) => {
+    const { id } = req.params;
 
-  static deleteProfessional = (req, res, start) => {
-    const id = req.params.id;
-
-    professionals.findByIdAndDelete(id, (err) => {
-      if (!err) {
-        res.status(200).send({ message: "Deleted" });
-      } else {
-        res.status(500).send({ message: err.message });
-      }
-    });
+    res.status(200).json(await ProfessionalsService.remove(id));
   };
 }

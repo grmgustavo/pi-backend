@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
+import env from "./.env.json" assert { type: "json" };
 
-mongoose.connect(
-  "mongodb+srv://admin:rGrDjp9I9uNmFbH7@cluster0.ejfsbhj.mongodb.net/body-shore-api"
-);
+mongoose.connect(env.url);
 
 const db = mongoose.connection;
 
